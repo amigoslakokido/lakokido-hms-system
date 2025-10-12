@@ -1,0 +1,33 @@
+<!doctype html><html lang="ar" dir="rtl"><head>
+<meta charset="utf-8"><title>{{ rec and 'تعديل' or 'إنشاء' }} تقرير يدوي — {{ category }}</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css">
+<style>body{max-width:900px;margin:24px auto}</style></head>
+<body class="p-3">
+  <h3>{{ rec and 'تعديل' or 'إنشاء' }} تقرير يدوي — {{ category }}</h3>
+  <form method="POST" action="{{ rec and url_for('manual_update', rec_id=rec.id) or url_for('manual_create', category=category) }}">
+    <div class="mb-3"><label class="form-label">العنوان:</label>
+      <input name="title" class="form-control" value="{{ rec and rec.title or '' }}">
+    </div>
+    <div class="mb-3"><label class="form-label">التفاصيل:</label>
+      <textarea name="description" rows="8" class="form-control">{{ rec and rec.description or '' }}</textarea>
+    </div>
+    {% if rec %}
+    <div class="mb-3"><label class="form-label">الحالة:</label>
+      <select name="status" class="form-select">
+        <option value="open" {{ 'selected' if rec.status=='open' else '' }}>مفتوحة</option>
+        <option value="closed" {{ 'selected' if rec.status=='closed' else '' }}>مغلقة</option>
+      </select>
+    </div>{% else %}
+      <input type="hidden" name="created_by" value="admin">
+    {% endif %}
+    <div class="d-flex gap-2">
+      <a class="btn btn-secondary" href="{{ url_for('manual_list', category=category) }}">رجوع</a>
+      <button class="btn btn-success">حفظ</button>
+      {% if rec %}
+      <form method="POST" action="{{ url_for('manual_delete', rec_id=rec.id) }}" onsubmit="return confirm('حذف؟')" style="display:inline">
+        <button class="btn btn-danger" formaction="{{ url_for('manual_delete', rec_id=rec.id) }}">🗑 حذف</button>
+      </form>
+      {% endif %}
+    </div>
+  </form>
+</body></html>

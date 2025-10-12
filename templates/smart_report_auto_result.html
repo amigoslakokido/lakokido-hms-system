@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>نتيجة التقرير الذكي</title>
+  <style>body{font-family:system-ui;max-width:900px;margin:20px auto}</style>
+</head>
+<body>
+  <h2>{{ rpt.title }}</h2>
+  <p>{{ rpt.intro }}</p>
+  <h3>التفاصيل</h3>
+  <p>{{ rpt.details }}</p>
+  <h3>الإجراءات المتخذة</h3>
+  <p>{{ rpt.actions }}</p>
+  <h3>الاقتراحات</h3>
+  <p>{{ rpt.suggestion }}</p>
+  <p><b>درجة الخطورة:</b> {{ rpt.severity }}</p>
+  <p><b>المحرر:</b> {{ rpt.author }}</p>
+
+  <hr>
+  <a href="/smart_report/auto">🔁 توليد تقرير جديد</a>
+</body>
+</html>

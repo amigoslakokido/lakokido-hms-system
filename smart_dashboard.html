@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="no" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HMS PRO SMART – Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body{background:#f6f7fb}
+    .appbar{position:sticky;top:0;z-index:1000;background:#fff;border-bottom:1px solid #e9eef5}
+    .metric{background:#fff;border:1px solid #e9eef5;border-radius:14px;padding:16px}
+    .metric h6{font-weight:700;margin-bottom:.35rem}
+    .metric .num{font-size:28px;font-weight:800}
+    .table-card{background:#fff;border:1px solid #e9eef5;border-radius:14px}
+    .btn-rounded{border-radius:10px}
+  </style>
+</head>
+<body>
+
+  <!-- شريط علوي موحّد -->
+  <div class="appbar">
+    <div class="container py-3 d-flex flex-wrap align-items-center gap-2">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+        <img src="/static/images/logo.png" onerror="this.style.display='none'" alt="" width="36" height="36">
+        <strong>GE AMIGOS AS – HMS PRO SMART</strong>
+      </a>
+
+      <div class="ms-auto d-flex align-items-center gap-2 flex-wrap">
+        <!-- اختيار الفئة (مصدره /api/categories) -->
+        <select id="catSelect" class="form-select form-select-sm" style="min-width:240px"></select>
+
+        <!-- فتح مجلد تقارير الفئة -->
+        <a id="openFolderBtn" class="btn btn-light btn-sm btn-rounded border">📁 Åpne mappe</a>
+
+        <!-- توليد PDF آلي للفئة -->
+        <button id="genBtn" class="btn btn-primary btn-sm btn-rounded">⚙️ Generer rapport</button>
+
+        <!-- إنشاء تقرير ذكي جديد للفئة -->
+        <a id="smartBtn" class="btn btn-success btn-sm btn-rounded">🤖 Ny smartrapport</a>
+
+        <!-- دخول النمط اليدوي للفئة -->
+        <a id="manualBtn" class="btn btn-outline-secondary btn-sm btn-rounded">✍️ Manuell modus</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container my-4">
+    <!-- مؤشرات سريعة -->
+    <div class="row g-3">
+      <div class="col-md-3"><div class="metric">
+        <h6>Hovedindikatorer</h6><div class="num" id="m-total">0</div>
+      </div></div>
+      <div class="col-md-3"><div class="metric">
+        <h6>Rapporter</h6><div class="num" id="m-reports">0</div>
+      </div></div>
+      <div class="col-md-3"><div class="metric">
+        <h6>Avvikshåndtering</h6><div class="num" id="m-deviations">0</div>
+      </div></div>
+      <div class="col-md-3"><div class="metric">
+        <h6>Arbeidstakere</h6><div class="num" id="m-workers">0</div>
+      </div></div>
+    </div>
+
+    <!-- آخر تسجيلات (عرض مختصر/اختياري) -->
+    <div class="table-card mt-4">
+      <div class="p-3 border-bottom"><strong>Siste registreringer</strong></div>
+      <div class="table-responsive">
+        <table class="table table-sm mb-0 align-middle">
+          <thead class="table-light">
+            <tr>
+              <th style="width:60px">#</th>
+              <th>Rapporter</th>
+              <th style="width:140px">Status</th>
+              <th style="width:170px">Dato</th>
+              <th style="width:120px">Detaljer</th>
+            </tr>
+          </thead>
+          <tbody id="recentBody">
+            <tr><td colspan="5" class="text-center text-muted py-4">Ingen data tilgjengelig</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+<script>
+async function loadCats() {
+  const sel = document.getElementById('catSelect');
+  sel.innerHTML = '<option>Laster...</option>';
+  const res = await fetch('/api/categories');
+  const data = await res.json();
+  sel.innerHTML = '';
+  (data.items || []).forEach(it => {
+    const o = document.createElement('option');
+    o.value = it.code;
+    o.textContent = `${it.label} (${it.code})`;
+    sel.appendChild(o);
+  });
+  applyLinks();
+}
+
+function currentCat(){
+  const sel = document.getElementById('catSelect');
+  return sel && sel.value ? sel.value : '';
+}
+
+function applyLinks(){
+  const cat = currentCat();
+  document.getElementById('openFolderBtn').href = cat ? `/reports/${cat}` : '#';
+  document.getElementById('smartBtn').href      = cat ? `/smart_report/new?category=${cat}` : '#';
+  document.getElementById('manualBtn').href     = cat ? `/manual/${cat}` : '#';
+}
+
+// زر التوليد الآلي
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('catSelect').addEventListener('change', applyLinks);
+
+  document.getElementById('genBtn').addEventListener('click', async () => {
+    const cat = currentCat();
+    if (!cat) { alert('Velg en kategori.'); return; }
+    const r = await fetch('/api/report_generate', {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ category: cat })
+    });
+    const j = await r.json();
+    if (j.ok) {
+      window.open(j.file.startsWith('/')? j.file : '/'+j.file, '_blank');
+    } else {
+      alert('Feil ved generering: ' + (j.detail || j.error || 'ukjent'));
+    }
+  });
+
+  loadCats();
+  loadStats();
+  loadRecent();
+});
+
+// مؤشرات أعلى الصفحة
+async function loadStats(){
+  try{
+    const r = await fetch('/api/stats');
+    const j = await r.json();
+    document.getElementById('m-total').textContent = j.total ?? 0;
+    document.getElementById('m-reports').textContent = j.rapporter ?? 0;
+    document.getElementById('m-deviations').textContent = j.avvik ?? 0;
+    document.getElementById('m-workers').textContent = j.arbeidere ?? 0;
+  }catch(e){}
+}
+
+// آخر السجلات (اختياري)
+async function loadRecent(){
+  try{
+    const r = await fetch('/api/records');
+    const j = await r.json();
+    const tb = document.getElementById('recentBody');
+    tb.innerHTML='';
+    (j.records||[]).slice(0,8).forEach((row,i)=>{
+      const tr=document.createElement('tr');
+      tr.innerHTML = `
+        <td>${row.id}</td>
+        <td>${row.title||'-'}</td>
+        <td><span class="badge text-bg-${
+          row.status==='open'?'danger':(row.status==='closed'?'success':'warning')
+        }">${row.status||'-'}</span></td>
+        <td>${row.created_at||''}</td>
+        <td><a class="btn btn-sm btn-light border" href="/manual/rec/${row.id}" target="_blank">Vis</a></td>`;
+      tb.appendChild(tr);
+    });
+    if (tb.children.length===0){
+      tb.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">Ingen data tilgjengelig</td></tr>';
+    }
+  }catch(e){}
+}
+</script>
+</body>
+</html>

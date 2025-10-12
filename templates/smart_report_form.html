@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>إنشاء تقرير ذكي</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css">
+  <style>body{background:#f8f9fa}.card{max-width:1000px;margin:30px auto}</style>
+</head>
+<body>
+<div class="card p-4">
+  <h3 class="mb-3 text-center">إنشاء تقرير ذكي — {{ category }}</h3>
+  <form method="POST" action="{{ url_for('smart_report_preview') }}">
+    <input type="hidden" name="category" value="{{ category }}">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <label class="form-label">المُعدّ:</label>
+        <input name="reporter" class="form-control" value="admin">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">التاريخ:</label>
+        <input type="date" name="date" class="form-control">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">الموقع:</label>
+        <input name="location" class="form-control" placeholder="مثال: مطبخ – خط الإنتاج A">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">نوع الحادث:</label>
+        <input name="incident_type" class="form-control" placeholder="انسكاب زيت / تماس كهربائي...">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">المسؤول:</label>
+        <input name="responsible" class="form-control" placeholder="الاسم/القسم">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">الموعد النهائي:</label>
+        <input type="date" name="due_date" class="form-control">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">السبب الجذري:</label>
+        <textarea name="root_cause" class="form-control" rows="2"></textarea>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">الأثر/النتيجة:</label>
+        <textarea name="impact" class="form-control" rows="2"></textarea>
+      </div>
+
+      <div class="col-md-12"><hr></div>
+
+      <div class="col-md-4">
+        <label class="form-label">إجراءات عاجلة:</label>
+        <textarea name="actions_immediate" class="form-control" rows="2"></textarea>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">تصحيحية:</label>
+        <textarea name="actions_corrective" class="form-control" rows="2"></textarea>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">وقائية:</label>
+        <textarea name="actions_preventive" class="form-control" rows="2"></textarea>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">سـيناريو/ملاحظات إضافية (اختياري):</label>
+        <textarea name="details" class="form-control" rows="2"></textarea>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">المخاطر (قبل الإجراءات):</label>
+        <div class="row g-2">
+          <div class="col">
+            <select class="form-select" name="likelihood">
+              <option>Lav</option><option selected>Middels</option><option>Høy</option>
+              <option>Svært lav</option><option>Svært høy</option>
+            </select>
+          </div>
+          <div class="col">
+            <select class="form-select" name="consequence">
+              <option>Moderat</option><option>Ubetydelig</option><option>Liten</option>
+              <option>Alvorlig</option><option>Kritisk</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 text-center mt-3">
+        <button class="btn btn-primary btn-lg">معاينة التقرير</button>
+        <a href="javascript:history.back()" class="btn btn-secondary btn-lg">رجوع</a>
+      </div>
+    </div>
+  </form>
+</div>
+</body>
+</html>

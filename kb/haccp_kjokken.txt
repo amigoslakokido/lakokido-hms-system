@@ -1,0 +1,35 @@
+Tittel: HACCP-prinsipper for restaurantkjøkken
+Nøkkelord: HACCP, kritiske kontrollpunkter, temperatur, nedkjøling, krysskontaminasjon, rengjøring, allergener, Mattilsynet
+
+1) HACCP i korte trekk
+- Identifiser farer (biologiske, kjemiske, fysiske) i hver prosess.
+- Fastsett kritiske kontrollpunkter (CCP) og grenser.
+- Overvåk CCP, iverksett korrigerende tiltak og dokumenter.
+
+2) Vanlige CCP i kjøkken
+- Mottak av råvarer: Temp./friskhet; avvis ved avvik.
+- Varmebehandling: Kjernetemp. ≥ 75 °C for fjørfe/farse o.l.
+- Nedkjøling: Fra 60 °C til 10 °C innen 2 timer (eller lokale krav).
+- Kjølekjede: Kjøl 0–4 °C; frys −18 °C; registrer avvik og tiltak.
+- Tining: I kjøl, ikke i romtemp.; unngå dryppforurensing.
+- Separasjon: Rå/tilberedt; ulike skjærebrett/soner; allergenhåndtering.
+
+3) Rengjøring og desinfeksjon
+- Plan og frekvens definert per sone/utstyr; sjekklister signert.
+- Riktig dosering/kontakt-tid for kjemi; skylling etter behov.
+- Kontrollpunkter: Særlig kontaktflater (håndtak, kuttere, benker).
+
+4) Personlig hygiene
+- Håndvask ved skift av oppgave, etter toalett, før matkontakt.
+- Hår/hodeplagg; korte negler; ingen smykker i produksjon.
+- Rutiner for sykdom/symptomer og fravær fra matkontakt.
+
+5) Allergenstyring
+- Merk alle retter; oppdatert allergenmatrise.
+- Unngå krysskontaminasjon ved produksjon og servering.
+- Egen oppbevaring/utstyr ved allergenholdige råvarer.
+
+6) Dokumentasjon
+- Temperatur-logger (mottak, varmebehandling, kjøl/frys).
+- Avviksskjemaer med årsak, tiltak, ansvar og frist.
+- Revisjon av HACCP-plan årlig eller ved endring av meny/prosess.

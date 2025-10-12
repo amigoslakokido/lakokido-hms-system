@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Forhåndsvisning — {{ title }}</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <style>
+    body{max-width:1000px;margin:26px auto}
+    h1{font-weight:800;letter-spacing:.2px}
+    .chip{color:#fff;padding:8px 14px;border-radius:12px;display:inline-block}
+    .section h6{font-weight:700;margin-top:14px}
+    pre{white-space:pre-wrap}
+    .card{border:1px solid #e9eef5;border-radius:14px;padding:16px;background:#fff}
+    .table thead th{background:#f6f8fb}
+  </style>
+</head>
+<body class="p-3">
+  <h1>{{ title }}</h1>
+  <div class="text-muted mb-3">
+    Kategori: {{ category }} — Dato: {{ date }} — Opprettet av: {{ reporter }}
+  </div>
+
+  <div class="d-flex align-items-center gap-2 mb-3">
+    <span id="statusChip" class="chip" style="background:#dc3545">🔴 Åpen sak</span>
+    <select id="statusSel" class="form-select form-select-sm" style="width:auto">
+      <option value="open" selected>🔴 Åpen sak</option>
+      <option value="processing">🟡 Under behandling</option>
+      <option value="closed">🟢 Løst</option>
+    </select>
+  </div>
+
+  <hr>
+
+  <!-- عرض الأقسام الذكية -->
+  <div class="card mb-3">
+    <h5 class="mb-3">Seksjoner</h5>
+    <div id="sectionsView"></div>
+  </div>
+
+  <!-- عرض جدول المخاطر -->
+  <div class="card mb-3">
+    <h5 class="mb-3">Risikotabell</h5>
+    <div class="table-responsive">
+      <table class="table table-sm align-middle" id="riskTable"></table>
+    </div>
+  </div>
+
+  <!-- عرض خطة الإجراءات -->
+  <div class="card mb-4">
+    <h5 class="mb-3">Tiltaksplan</h5>
+    <div class="table-responsive">
+      <table class="table table-sm align-middle" id="actionsTable">
+        <thead><tr><th>Tiltak</th><th>Ansvar</th><th>Frist</th><th>Status</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- نموذج الحفظ النهائي -->
+  <form method="POST" action="{{ url_for('smart_report_confirm') }}" class="mt-4">
+    <input type="hidden" name="category"    value="{{ category }}">
+    <input type="hidden" name="reporter"    value="{{ reporter }}">
+    <input type="hidden" name="date"        value="{{ date }}">
+    <input type="hidden" name="title"       value="{{ title }}">
+    <!-- الوصف يبقى للنص المجمع (اختياري للعرض في صفحة view) -->
+    <input type="hidden" name="description" value="{{ description }}">
+    <input type="hidden" name="severity"    value="{{ severity }}">
+    <input type="hidden" id="statusInput"   name="status" value="open">
+    <!-- نحفظ هيكل الذكاء كما هو -->
+    <input type="hidden" id="sectionsInput"  name="sections"   value='{{ sections|safe }}'>
+    <input type="hidden" id="actionsInput"   name="actions"    value='{{ actions|safe }}'>
+    <input type="hidden" id="riskInput"      name="risk_table" value='{{ risk_table|safe }}'>
+
+    <div class="d-flex gap-2">
+      <a href="javascript:history.back()" class="btn btn-secondary">تعديل</a>
+      <button type="submit" class="btn btn-success">حفظ كـ PDF</button>
+    </div>
+  </form>
+
+  <!-- بيانات JSON خام للعرض فقط -->
+  <script id="sectionsData" type="application/json">{{ sections|safe }}</script>
+  <script id="actionsData"  type="application/json">{{ actions|safe }}</script>
+  <script id="riskData"     type="application/json">{{ risk_table|safe }}</script>
+
+<script>
+  // شارة الحالة
+  const sel=document.getElementById('statusSel');
+  const chip=document.getElementById('statusChip');
+  const hiddenStatus=document.getElementById('statusInput');
+  const map={open:{text:'🔴 Åpen sak',color:'#dc3545'},
+             processing:{text:'🟡 Under behandling',color:'#ffc107',dark:'#000'},
+             closed:{text:'🟢 Løst',color:'#16a34a'}};
+  function applyStatus(v){chip.textContent=map[v].text;chip.style.background=map[v].color;chip.style.color=map[v].dark||'#fff';hiddenStatus.value=v;}
+  sel.addEventListener('change',e=>applyStatus(e.target.value));applyStatus(sel.value);
+
+  // أدوات بسيطة
+  function getJSON(id){try{return JSON.parse(document.getElementById(id).textContent||'[]')}catch(e){return []}}
+
+  // عرض الأقسام
+  const sections = getJSON('sectionsData');
+  const secWrap  = document.getElementById('sectionsView');
+  if(Array.isArray(sections) && sections.length){
+    sections.forEach(s=>{
+      const card = document.createElement('div');
+      card.className='mb-3';
+      card.innerHTML = `<h6>${(s.title||'').trim()}</h6><div class="text-body"><pre style="white-space:pre-wrap;margin:0">${(s.body||'').trim()}</pre></div>`;
+      secWrap.appendChild(card);
+    });
+  }else{
+    secWrap.innerHTML = '<div class="text-muted">Ingen seksjoner.</div>';
+  }
+
+  // عرض جدول المخاطر
+  const risk = getJSON('riskData');
+  const riskT = document.getElementById('riskTable');
+  if(Array.isArray(risk) && risk.length){
+    let thead = '<thead><tr>'+risk[0].map(h=>`<th>${h}</th>`).join('')+'</tr></thead>';
+    let tbody = '<tbody>';
+    for(let i=1;i<risk.length;i++){
+      tbody += '<tr>'+risk[i].map(c=>`<td>${c??''}</td>`).join('')+'</tr>';
+    }
+    tbody += '</tbody>';
+    riskT.innerHTML = thead + tbody;
+  }else{
+    riskT.innerHTML = '<thead><tr><th>Risiko</th><th>Beskrivelse</th><th>Tiltak</th></tr></thead><tbody><tr><td colspan="3" class="text-muted">Ingen data.</td></tr></tbody>';
+  }
+
+  // عرض خطة الإجراءات
+  const actions = getJSON('actionsData');
+  const actBody = document.querySelector('#actionsTable tbody');
+  if(Array.isArray(actions) && actions.length){
+    actions.forEach(a=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${a.tiltak||''}</td><td>${a.ansvar||''}</td><td>${a.frist||''}</td><td>${a.status||''}</td>`;
+      actBody.appendChild(tr);
+    });
+  }else{
+    actBody.innerHTML = '<tr><td colspan="4" class="text-muted">Ingen tiltak.</td></tr>';
+  }
+</script>
+</body>
+</html>

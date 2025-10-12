@@ -1,0 +1,25 @@
+<form id="form-deviation" enctype="multipart/form-data">
+  <input type="hidden" name="category" value="deviations" />
+  <div class="form-grid">
+    <div class="form-row">
+      <label>Tittel</label>
+      <input type="text" name="title" placeholder="Avvik tittel" required>
+    </div>
+    <div class="form-row">
+      <label>Status</label>
+      <select name="status">
+        <option value="open">Open</option>
+        <option value="in_progress">In progress</option>
+        <option value="closed">Closed</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-row">
+    <label>Beskrivelse</label>
+    <textarea name="description" rows="4" placeholder="Hva skjedde? Hvor?"></textarea>
+  </div>
+  <div class="form-row">
+    <label>Filer (bilder/PDF)</label>
+    <input type="file" name="files" multiple accept=".jpg,.jpeg,.png,.pdf">
+  </div>
+</form>

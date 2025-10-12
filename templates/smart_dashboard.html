@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="{{ session.get('lang','no') }}" dir="{{ 'rtl' if session.get('lang')=='ar' else 'ltr' }}">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>GE AMIGOS AS – HMS PRO SMART</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    body[dir="rtl"] { direction: rtl; text-align: right; }
+    body[dir="rtl"] .sidebar { left: auto; right: 0; border-right: none; border-left: 1px solid #e5e7eb; }
+    body[dir="rtl"] .page { margin-left: 0; margin-right: 240px; }
+    body[dir="rtl"] .topbar .lang-switch { flex-direction: row-reverse; }
+    body[dir="rtl"] .kpi-card, body[dir="rtl"] .table th, body[dir="rtl"] .table td { text-align: right; }
+    body[dir="rtl"] .modal-content { text-align: right; }
+  </style>
+</head>
+<body class="light">
+  <aside class="sidebar">
+    <div class="brand">
+      <img class="brand-logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="GE AMIGOS AS logo"/>
+      <div class="brand-title">GE AMIGOS AS</div>
+    </div>
+    <nav class="menu" id="side-menu">
+      <a class="item active" href="#" data-cat="">{{ t.get('dashboard','Dashboard') }}</a>
+      <a class="item" href="#" data-cat="reports">{{ t.get('reports','Rapporter') }}</a>
+      <a class="item" href="#" data-cat="deviations">{{ t.get('deviations','Avvikshåndtering') }}</a>
+      <a class="item" href="#" data-cat="workers">{{ t.get('workers','Arbeidstakere') }}</a>
+      <a class="item" href="#" data-cat="environment">{{ t.get('environment','Miljø og avfall') }}</a>
+      <a class="item" href="#" data-cat="risk">{{ t.get('risk','Risikovurdering') }}</a>
+      <a class="item" href="#" data-cat="ppe">{{ t.get('ppe','Verneutstyr') }}</a>
+      <a class="item" href="#" data-cat="emergency">{{ t.get('emergency','Beredskap') }}</a>
+      <a class="item" href="#" data-cat="maintenance">{{ t.get('maintenance','Vedlikehold') }}</a>
+      <a class="item" href="#" data-cat="settings">{{ t.get('settings','Innstillinger') }}</a>
+    </nav>
+  </aside>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="top-title">HMS PRO SMART</div>
+      <div class="top-actions">
+        <input class="search" type="search" id="search-field" placeholder="{{ 'بحث...' if session.get('lang')=='ar' else ('Search…' if session.get('lang')=='en' else 'Søk…') }}"/>
+        <nav class="lang-switch">
+          <a href="{{ url_for('set_lang', code='ar') }}" class="{{ 'active' if session.get('lang')=='ar' else '' }}">AR</a>
+          <a href="{{ url_for('set_lang', code='no') }}" class="{{ 'active' if session.get('lang')=='no' else '' }}">NO</a>
+          <a href="{{ url_for('set_lang', code='en') }}" class="{{ 'active' if session.get('lang')=='en' else '' }}">EN</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="content">
+      <div id="toast" class="toast" style="display:none;"></div>
+
+      <section class="actions-bar">
+        <button id="add-btn" class="primary-btn" style="display:none;">+ {{ t.get('add','New') }}</button>
+        <div style="flex:1"></div>
+        <button id="open-folder-btn" class="ghost-btn">📂 {{ t.get('open_folder','Åpne mappe') }}</button>
+        <button id="gen-btn" class="ghost-btn">📄 {{ t.get('generate_report','Generer rapport') }}</button>
+        <button id="sched-btn" class="ghost-btn">⏱ {{ t.get('auto_report','Auto-rapport') }}</button>
+      </section>
+
+      <section class="kpi-row">
+        <div class="kpi-card kpi-blue"><div class="kpi-icon">🔒</div><div class="kpi-text"><div class="kpi-title">{{ t.get('smart_kpi','Hovedindikatorer') }}</div><div class="kpi-num" id="kpi-sec">0</div></div></div>
+        <div class="kpi-card kpi-orange"><div class="kpi-icon">📑</div><div class="kpi-text"><div class="kpi-title">{{ t.get('reports','Rapporter') }}</div><div class="kpi-num" id="kpi-reports">0</div></div></div>
+        <div class="kpi-card kpi-purple"><div class="kpi-icon">⚠️</div><div class="kpi-text"><div class="kpi-title">{{ t.get('deviations','Avvik') }}</div><div class="kpi-num" id="kpi-avvik">0</div></div></div>
+        <div class="kpi-card kpi-green"><div class="kpi-icon">👤</div><div class="kpi-text"><div class="kpi-title">{{ t.get('workers','Arbeidere') }}</div><div class="kpi-num" id="kpi-workers">0</div></div></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><h3>{{ t.get('smart_feed','Siste registreringer') }}</h3></div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>{{ t.get('reports','Kategori') }}</th>
+                <th>{{ t.get('smart_feed','Tittel') }}</th>
+                <th>{{ t.get('status','Status') }}</th>
+                <th>{{ t.get('date','Dato') }}</th>
+                <th>{{ t.get('details','Detaljer') }}</th>
+              </tr>
+            </thead>
+            <tbody id="feed-table"></tbody>
+          </table>
+          <div id="feed-empty" class="empty">{{ t.get('no_data','Ingen data tilgjengelig') }}</div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="pro-footer">
+      <button class="pro-btn">{{ t.get('pro_generate_auto','Auto-generer') }}</button>
+      <button class="pro-btn">{{ t.get('pro_confirm','Leder bekrefter') }}</button>
+      <button class="pro-btn">{{ t.get('pro_manual_mode','Manuell modus') }}</button>
+      <button class="pro-btn">{{ t.get('pro_settings','PRO-innstillinger') }}</button>
+    </footer>
+  </div>
+
+  <!-- CREATE/EDIT MODAL -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-head">
+        <h3 id="modal-title">Ny</h3>
+        <button id="modal-close" class="close-btn">×</button>
+      </div>
+      <div id="modal-body" class="modal-body"></div>
+      <div class="modal-foot">
+        <button id="modal-cancel" class="ghost-btn">Lukk</button>
+        <button id="modal-save" class="primary-btn">Lagre</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAILS MODAL -->
+  <div id="details-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-head">
+        <h3 id="details-title">Detaljer</h3>
+        <button id="details-close" class="close-btn">×</button>
+      </div>
+      <div id="details-body" class="modal-body"></div>
+      <div class="modal-foot">
+        <button id="details-edit" class="ghost-btn">✏️ Rediger</button>
+        <button id="details-delete" class="ghost-btn">🗑 Slett</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GENERATE REPORT MODAL -->
+  <div id="gen-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-head">
+        <h3>Generer rapport (kategori)</h3>
+        <button id="gen-close" class="close-btn">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="form-row">
+            <label>Velg kategori</label>
+            <select id="gen-category">
+              <option value="reports">Rapporter</option>
+              <option value="deviations">Avvik</option>
+              <option value="workers">Arbeidere</option>
+              <option value="environment">Miljø</option>
+              <option value="risk">Risiko</option>
+              <option value="ppe">Verneutstyr</option>
+              <option value="emergency">Beredskap</option>
+              <option value="maintenance">Vedlikehold</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label>Navn på leder / bruker</label>
+            <input type="text" id="gen-by" value="Gourg Mounir">
+          </div>
+        </div>
+        <div id="gen-result" class="muted"></div>
+      </div>
+      <div class="modal-foot">
+        <button id="gen-cancel" class="ghost-btn">Lukk</button>
+        <button id="gen-run" class="primary-btn">Generer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCHEDULER MODAL -->
+  <div id="sched-modal" class="modal">
+    <div class="modal-content">
+      <div class="modal-head">
+        <h3>Auto-rapport (ukeplan)</h3>
+        <button id="sched-close" class="close-btn">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-grid">
+          <div class="form-row"><label>Aktiv</label><select id="sched-enabled"><option value="1">På</option><option value="0">Av</option></select></div>
+          <div class="form-row"><label>Ukedag</label><select id="sched-weekday"><option value="0">Mandag</option><option value="1">Tirsdag</option><option value="2">Onsdag</option><option value="3">Torsdag</option><option value="4">Fredag</option><option value="5">Lørdag</option><option value="6">Søndag</option></select></div>
+          <div class="form-row"><label>Time</label><input type="number" id="sched-hour" min="0" max="23" value="7"></div>
+          <div class="form-row"><label>Minutt</label><input type="number" id="sched-minute" min="0" max="59" value="0"></div>
+        </div>
+        <div class="form-row">
+          <label>Velg kategorier (auto)</label>
+          <div id="sched-cats" class="chip-list">
+            <label><input type="checkbox" value="reports" checked> Rapporter</label>
+            <label><input type="checkbox" value="deviations" checked> Avvik</label>
+            <label><input type="checkbox" value="workers" checked> Arbeidere</label>
+            <label><input type="checkbox" value="environment"> Miljø</label>
+            <label><input type="checkbox" value="risk"> Risiko</label>
+            <label><input type="checkbox" value="ppe"> Verneutstyr</label>
+            <label><input type="checkbox" value="maintenance"> Vedlikehold</label>
+          </div>
+        </div>
+        <div id="sched-last" class="muted"></div>
+      </div>
+      <div class="modal-foot">
+        <button id="sched-cancel" class="ghost-btn">Lukk</button>
+        <button id="sched-save" class="primary-btn">Lagre</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/smart.js') }}"></script>
+</body>
+</html>

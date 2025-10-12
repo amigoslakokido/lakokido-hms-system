@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <title>توليد تقرير ذكي تلقائي</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto;max-width:800px;margin:20px auto}
+    label{display:block;margin-top:10px}
+    textarea{width:100%;min-height:120px}
+  </style>
+</head>
+<body>
+  <h2>🧠 توليد تقرير ذكي تلقائي</h2>
+  <form method="post">
+    <label>اسم الشخص:
+      <input type="text" name="name">
+    </label>
+    <label>الفئة:
+      <select name="category">
+        {% for c in categories %}
+        <option value="{{ c }}">{{ c }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label>الموقع:
+      <input type="text" name="location">
+    </label>
+    <label>التاريخ:
+      <input type="date" name="date">
+    </label>
+    <label>رؤوس أقلام عن الحالة:
+      <textarea name="notes" placeholder="مثلاً: تسرب زيت في المطبخ – تم تنظيف الأرضية"></textarea>
+    </label>
+    <button type="submit">توليد التقرير الذكي</button>
+  </form>
+</body>
+</html>

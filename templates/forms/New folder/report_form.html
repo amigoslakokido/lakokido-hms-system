@@ -1,0 +1,23 @@
+<form id="report-form" class="form-grid">
+  <div class="form-row">
+    <label>Tittel</label>
+    <input type="text" name="title" required>
+  </div>
+  <div class="form-row">
+    <label>Beskrivelse</label>
+    <textarea name="description" rows="3"></textarea>
+  </div>
+  <div class="form-row">
+    <label>Status</label>
+    <select name="status">
+      <option value="open">Åpen</option>
+      <option value="in_progress">Under arbeid</option>
+      <option value="closed">Lukket</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label>Vedlegg (bilder eller PDF)</label>
+    <input type="file" name="files" multiple>
+  </div>
+  <button type="submit" class="primary-btn">Lagre</button>
+</form>

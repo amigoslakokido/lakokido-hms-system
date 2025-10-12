@@ -1,0 +1,37 @@
+Tittel: Elektrisk sikkerhet i restaurantmiljø (NEK 400 / HMS)
+Nøkkelord: elektrisk, strøm, ledning, kabel, sikring, tavle, brann, støt, NEK 400, internkontroll, vedlikehold
+
+1) Typiske farer
+- Eksponerte eller skadde ledninger (isolasjon brutt).
+- Fukt i nærheten av stikk/fordelingsbokser, særlig ved oppvask og kjøl/frys.
+- Midlertidige skjøteledninger i gangbaner (snublefare + overoppheting).
+- Overbelastning av kurser pga. flere apparater på samme stikk.
+- Slitte kontakter/plugger og varmgang i stikkontakter.
+
+2) Krav og standarder (kort)
+- NEK 400: Prosjektering, utførelse og verifikasjon av elektriske anlegg.
+- Internkontrollforskriften: Systematisk HMS-arbeid inkl. kontroll av elektrisk sikkerhet.
+- Kun autorisert elektriker skal utføre faste installasjoner og reparasjoner.
+
+3) Daglig/ukentlig kontroll (sjekkliste)
+- Visuelt: Ingen eksponerte ledere, ingen smeltede/plastdeformerte kontakter.
+- Tørr og ren sone rundt stikkontakter/skap (unngå vannsprut).
+- Skjøteledninger kun midlertidig; ikke under tepper/utstyr.
+- Sjekk varmgang: berør forsiktig støpsler etter drift (skal ikke være varme).
+- Nødlys/utganger frie for hindringer; test i henhold til rutine.
+
+4) Tiltak ved avvik
+- Sperr område og trekk ut støpsel / slå av kurs ved fare (om trygt).
+- Merk og isoler midlertidig kun hvis det kan gjøres sikkert.
+- Varsle leder og kontakt autorisert elektriker for fagmessig utbedring.
+- Loggfør hendelsen, årsak, tiltak, ansvar og frist.
+
+5) Eksempler på forebyggende handlinger
+- Plan for periodisk kontroll av stikk, kabler og tavlerom.
+- Opplæring av ansatte om risikoforståelse (støt/brann).
+- Etikettering av kurser og utstyr; effektliste for hver kurs.
+- Erstatte gamle skjøteledninger med fast løsning utført av elektriker.
+
+6) Dokumentasjon
+- Bevar samsvarserklæringer, kontrollrapporter og vedlikeholdslogg.
+- Avvik lukkes først etter verifikasjon fra elektriker og HMS-ansvarlig.

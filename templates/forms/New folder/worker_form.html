@@ -1,0 +1,22 @@
+<form id="worker-form" class="form-grid">
+  <div class="form-row">
+    <label>Navn</label>
+    <input type="text" name="title" required>
+  </div>
+  <div class="form-row">
+    <label>Stilling / rolle</label>
+    <input type="text" name="description">
+  </div>
+  <div class="form-row">
+    <label>Status</label>
+    <select name="status">
+      <option value="open">Aktiv</option>
+      <option value="closed">Ikke aktiv</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label>Vedlegg (CV, ID...)</label>
+    <input type="file" name="files" multiple>
+  </div>
+  <button type="submit" class="primary-btn">Lagre</button>
+</form>

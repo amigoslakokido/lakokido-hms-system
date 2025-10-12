@@ -1,0 +1,41 @@
+[ROOT]
+app.py
+config.py
+database.py
+hms.db
+hms_smart.db
+hms_summary.txt
+models.py
+report_generator.py
+requirements.txt
+
+[TEMPLATES]
+C:\Users\Gourg\Desktop\HMS_UNIFIED\templates\forms
+C:\Users\Gourg\Desktop\HMS_UNIFIED\templates\smart_dashboard.html
+C:\Users\Gourg\Desktop\HMS_UNIFIED\templates\forms\Avvik_form.html
+C:\Users\Gourg\Desktop\HMS_UNIFIED\templates\forms\deviations.html
+C:\Users\Gourg\Desktop\HMS_UNIFIED\templates\forms\deviation_form.html
+C:\Users\Gourg\Desktop\HMS_UNIFIED\templates\forms\emergency.html
+C:\Users\Gourg\Desktop\HMS_UNIFIED\templates\forms\environment.html
+C:\Users\Gourg\Desktop\HMS_UNIFIED\templates\forms\maintenance.html
+C:\Users\Gourg\Desktop\HMS_UNIFIED\templates\forms\ppe.html
+C:\Users\Gourg\Desktop\HMS_UNIFIED\templates\forms\reports.html
+C:\Users\Gourg\Desktop\HMS_UNIFIED\templates\forms\report_form.html
+C:\Users\Gourg\Desktop\HMS_UNIFIED\templates\forms\risk.html
+C:\Users\Gourg\Desktop\HMS_UNIFIED\templates\forms\workers.html
+C:\Users\Gourg\Desktop\HMS_UNIFIED\templates\forms\worker_form.html
+
+[STATIC\JS]
+C:\Users\Gourg\Desktop\HMS_UNIFIED\static\js\app.js
+C:\Users\Gourg\Desktop\HMS_UNIFIED\static\js\smart.js
+
+[STATIC\CSS]
+C:\Users\Gourg\Desktop\HMS_UNIFIED\static\css\style.css
+
+[LANGS]
+C:\Users\Gourg\Desktop\HMS_UNIFIED\langs\ar.json
+C:\Users\Gourg\Desktop\HMS_UNIFIED\langs\en.json
+C:\Users\Gourg\Desktop\HMS_UNIFIED\langs\no.json
+C:\Users\Gourg\Desktop\HMS_UNIFIED\langs\???? en.json
+C:\Users\Gourg\Desktop\HMS_UNIFIED\langs\???? no.json
+C:\Users\Gourg\Desktop\HMS_UNIFIED\langs\???? ar.json

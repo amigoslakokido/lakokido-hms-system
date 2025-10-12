@@ -1,0 +1,33 @@
+Tittel: Internkontroll for HMS i restaurant
+Nøkkelord: internkontroll, HMS, risikovurdering, avvik, opplæring, vernerunde, beredskap, Arbeidstilsynet
+
+1) Formål
+- Sikre systematisk HMS-arbeid: forebygge skader, sykdom og avvik.
+- Oppfylle krav i internkontrollforskriften.
+
+2) Ansvarsfordeling
+- Daglig leder: overordnet ansvar, ressurser og oppfølging.
+- HMS-ansvarlig: drift av system, dokumentasjon, opplæring.
+- Verneombud: påse sikkerhet, melde avvik, delta i vernerunder.
+- Ansatte: følge rutiner, bruke PPE, melde fra om farer/avvik.
+
+3) Risikovurdering (minimum årlig og ved endringer)
+- Kartlegg farer (varmeoverflater, glatte gulv, kniver, kjemi, strøm).
+- Vurder sannsynlighet/konsekvens; definer tiltak og ansvar.
+- Lag handlingsplan med frister; følg opp og lukk.
+
+4) Rutiner og prosedyrer (eksempler)
+- Avvikshåndtering: registrering, klassifisering, tiltak, verifikasjon.
+- Opplæring: nyansatte, HACCP, brannvern, førstehjelp, el-sikkerhet.
+- Vedlikehold: plan for utstyr, kontroll av el-anlegg og ventilasjon.
+- PPE: tilgjengelighet, riktig bruk (hansker, sklisikre sko, hørselsvern ved behov).
+
+5) Beredskap og varsling
+- Brann: slukkeutstyr, rømningsveier, øvelser dokumentert.
+- Førstehjelp: utstyr, opplæring, kontaktinformasjon synlig.
+- Strømstans/gasslekkasje: prosedyrer for sikker stans og varsling.
+
+6) Dokumentasjon og forbedring
+- Årshjul for aktiviteter (risikovurdering, vernerunder, øvelser).
+- Møtereferater HMS, opplæringslogg, service-/kontrollrapporter.
+- Revisjon internt; tiltak fra revisjon inn i handlingsplan.

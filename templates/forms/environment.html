@@ -1,0 +1,15 @@
+<form id="form-environment" class="form-grid">
+  <div class="form-row"><label>Tittel (Miljø)</label><input type="text" name="title" required></div>
+  <div class="form-row" style="grid-column:1/-1"><label>Beskrivelse (avfall/olje m.m.)</label><textarea name="description" rows="3"></textarea></div>
+  <div class="form-row"><label>Status</label><select name="status"><option value="open">Åpen</option><option value="in_progress">Under arbeid</option><option value="closed">Lukket</option></select></div>
+  <div class="form-row" style="grid-column:1/-1"><label>Vedlegg</label><input type="file" name="files" multiple></div>
+</form>
+<!-- أزرار التقارير الذكية -->
+<div style="margin-bottom: 15px;">
+  <a href="{{ url_for('smart_report_new') }}?category=environment" class="btn btn-primary">
+    📄 تقرير ذكي جديد
+  </a>
+  <a href="{{ url_for('smart_reports_list', category='environment') }}" class="btn btn-secondary">
+    📚 قائمة التقارير الذكية
+  </a>
+</div>
