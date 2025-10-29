@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>GE AMIGOS AS – HMS PRO SMART</title>
+  <title>Amigos LA kokido AS – Internkontroll / HMS</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <style>
     body[dir="rtl"] { direction: rtl; text-align: right; }
@@ -17,8 +17,8 @@
 <body class="light">
   <aside class="sidebar">
     <div class="brand">
-      <img class="brand-logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="GE AMIGOS AS logo"/>
-      <div class="brand-title">GE AMIGOS AS</div>
+      <img class="brand-logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="Amigos LA kokido AS logo"/>
+      <div class="brand-title">Amigos LA kokido AS</div>
     </div>
     <nav class="menu" id="side-menu">
       <a class="item active" href="#" data-cat="">{{ t.get('dashboard','Dashboard') }}</a>
@@ -36,7 +36,7 @@
 
   <div class="page">
     <header class="topbar">
-      <div class="top-title">HMS PRO SMART</div>
+      <div class="top-title">Internkontroll / HMS</div>
       <div class="top-actions">
         <input class="search" type="search" id="search-field" placeholder="{{ 'بحث...' if session.get('lang')=='ar' else ('Search…' if session.get('lang')=='en' else 'Søk…') }}"/>
         <nav class="lang-switch">

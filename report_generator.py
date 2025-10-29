@@ -87,7 +87,7 @@ def generate_category_report(category_code: str, upload_root: str, logo_path: st
             pass
 
     c.setFont("Helvetica-Bold", 14); c.setFillColor(BLUE_DARK)
-    c.drawRightString(PAGE_W - RIGHT_MARGIN, PAGE_H - 1.3*cm, "GE AMIGOS AS – HMS SYSTEM")
+    c.drawRightString(PAGE_W - RIGHT_MARGIN, PAGE_H - 1.3*cm, "Amigos LA kokido AS – Internkontroll / HMS")
     c.setFont("Helvetica", 9); c.setFillColor(colors.black)
     c.drawRightString(PAGE_W - RIGHT_MARGIN, PAGE_H - 1.9*cm, f"Generert: {now.strftime('%Y-%m-%d %H:%M')}  |  Av: {created_by}")
 
